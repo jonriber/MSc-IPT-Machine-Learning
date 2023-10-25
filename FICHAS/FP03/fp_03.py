@@ -111,6 +111,10 @@ print("INTERCEPT", regr.intercept_) #teta0
 plt.scatter(train.ENGINESIZE, train.CO2EMISSIONS, color="red")
 
 plt.plot(train_x, regr.coef_[0][0]*train_x + regr.intercept_[0],"-r", linewidth=3)
+#or
+
+# train_y = regr.predict(train_x)
+# plt.plot(train_x,train_y,"-m",linewidth=3)
 
 plt.xlabel("ENGINE SIZE")
 plt.ylabel("EMISSION")
@@ -118,3 +122,20 @@ plt.title("LINEAR REGRESSION - TRAIN")
 
 exResult = regr.intercept_ + (regr.coef_*(2.9))
 print("EXERCISE RESULT:",exResult)
+
+#MSE - CONVEX FUNCTION
+MSE = []
+x = df.ENGINESIZE
+y = df.CO2EMISSIONS
+
+theta_vect = np.linspace(-100,250,500) #set theta space
+
+for theta in theta_vect:
+    aux = 1/len(x) * np.sum((y-theta*x)**2) #MSE
+    MSE.append(aux)
+    
+plt.plot(theta_vect,MSE,"r",linewidth=2)
+plt.xlabel("theta")
+plt.ylabel("MSE")
+plt.title("MSE - CONVEX FUNCTION")
+
