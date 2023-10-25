@@ -17,17 +17,44 @@ Linear regression
         Estimation line is obtained through MINIMAL MSE (IMPORTANT!!!)
 
     
-    # Estimating t0 and t1
+    # Estimating t0 and t1 (FITTING!!!)
 
         t1 is the average value, inclination of the line, slope, gradient
         t0 is the value of y when t1 is zero
         n is noise, which is normal distribution (gauss distribution)
 
 
-    pros of linear regression  
+    # pros of linear regression  
         1- very fast
         2- no tuning needed
         3- Very interpretable
+
+
+    It is very normal to have an error (small or big) using simple linear regression
+
+    # EVALUATION OF MY MODEL
+
+        . train and test
+            use all data for training 
+            predicted values versus actual values
+            compare my predicted values against ground proof
+            calculate accuracy 
+                average of actual - predicted
+        . train and split
+            use just a part of the data for training
+            more accurate evaluation on out-of-sample accuracy
+            mutually exclusive
+
+        . K-fold cross validation (most used technique, specially when we have small dataset)
+            first fold for testing and the rest for training
+            second fold for testing  and the rest for  training
+            ....
+            ....
+            final result is the average of the accuracy of K-fold
+            
+
+
+        QUESTION : How much can we trust this model??
 
     
 
