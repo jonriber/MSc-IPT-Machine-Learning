@@ -1,0 +1,23 @@
+Linear regression
+
+# SIMPLE LINEAR regression
+    - SImple linear regression means that we´re using only one dependant variable
+
+    - Points used for estimation of linear model
+
+    equation for the estimation line:
+        y = t0 + t1*x
+
+    MSE (means square error)
+        MSE=1/n*( sum(y-y1)**2~)
+        where:
+        y = data point or real value
+        y1 = estimated point for each n value
+
+        Estimation line is obtained through MINIMAL MSE (IMPORTANT!!!)
+
+    
+
+
+    
+    
