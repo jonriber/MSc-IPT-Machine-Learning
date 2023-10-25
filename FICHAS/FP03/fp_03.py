@@ -139,3 +139,22 @@ plt.xlabel("theta")
 plt.ylabel("MSE")
 plt.title("MSE - CONVEX FUNCTION")
 
+#EVALUATING OF THE FITTING
+
+from sklearn.metrics import r2_score
+
+test_x = np.asanyarray(test[["ENGINESIZE"]])
+test_y = np.asanyarray(test[["CO2EMISSIONS"]])
+
+#TEST PREDICTIONS
+
+test_y_ = regr.predict(test_x)
+plt.figure()
+plt.scatter(test_x,test_y, color="blue")
+plt.xlabel("ENGINE SIZE")
+plt.ylabel("EMISSION")
+plt.title("LINEAR REGRESSION - TEST")
+
+plt.plot(test_x, test_y_, "r")
+
+#TO-DO ANALYSE THE ERRORS!!!!!
