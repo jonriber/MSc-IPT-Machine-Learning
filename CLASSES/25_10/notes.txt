@@ -33,6 +33,7 @@ Linear regression
     It is very normal to have an error (small or big) using simple linear regression
 
     # EVALUATION OF MY MODEL
+        out-of-sample = different training and testing data
 
         . train and test
             use all data for training 
@@ -51,10 +52,19 @@ Linear regression
             ....
             ....
             final result is the average of the accuracy of K-fold
-            
+
 
 
         QUESTION : How much can we trust this model??
+
+    # EVALUATION METRICS
+        ERROR = different between actual value and predicted value
+
+        MAE (MEAN ABSOLUT ERROR)
+        MSE
+        RMSE (ROOT MEAN SQUARE ERROR) ---> most common, interpretable in the same units
+        R**2 -> value between 0 and 1
+        RSE (RELATIVE SQUARE ERROR)
 
     
 
