@@ -23,7 +23,7 @@ df.info()
 print("DESCRIBE")
 df.describe()
 df.describe()["ENGINESIZE"]
-df[["ENGINESIZE","CYLINDERS"]].describe()
+df[["ENGINESIZE","CYLINDERS","FUELCONSUMPTION_COMB"]].describe()
 #Describe show us some usefull methods to evaluate data
 
 #%%filtering only cars of one model, AUDI for example
@@ -63,7 +63,6 @@ plt.scatter(cdf.CYLINDERS, cdf.CO2EMISSIONS, color="black")
 #%%TRAINING DATASET AND SPLITING
 
 np.random.seed(0) #set the seed to obtain the same random values
-
 rand_samp = np.random.rand(len(df))
 
 plt.hist(rand_samp, bins=100)
@@ -159,9 +158,9 @@ plt.title("LINEAR REGRESSION - TEST")
 
 plt.plot(test_x, test_y_, "r")
 
-#TO-DO ANALYSE THE ERRORS!!!!!
-# %%
-
+#%%TO-DO ANALYSE THE ERRORS!!!!!
+## IS THIS MODEL GOOD OR NOT???
+##  
 #%%DEFINING MY GENERAL FUNCTION
 def my_regression_function(datax, datay, label_axis_x, label_axis_y):
     print("datax:",datax)
