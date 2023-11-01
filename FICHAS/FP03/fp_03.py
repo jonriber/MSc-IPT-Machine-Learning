@@ -2,7 +2,9 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-
+from sklearn.metrics import mean_squared_error 
+from sklearn import linear_model
+from sklearn.metrics import r2_score 
 #%%GET THE DATASET and download it from the link
 # get_ipython().system('wget --no-check-certificate -O FuelConsumption.csv https://cf-coursesdata.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-ML0101ENSkillsNetwork/labs/Module%202/data/FuelConsumptionCo2.csv')
 
@@ -96,38 +98,46 @@ plt.xlabel("FUELCONSUMPTION_COMB")
 plt.ylabel("CO2 Emissions")
 plt.show()
 #%%using sklearn package to model data
-from sklearn import linear_model
-from sklearn.metrics import r2_score 
+
 regr = linear_model.LinearRegression()
 #%% GETTING TRAINING DATA FOR INDEPENDENT VARIABLES
 train_x_engine = np.asanyarray(train[["ENGINESIZE"]])
 train_x_fuel = np.asanyarray(train[["FUELCONSUMPTION_COMB"]])
-train_x_cylinder = np.asanyarray(train[["CYLINDERS"]])
+train_x_cylinders = np.asanyarray(train[["CYLINDERS"]])
+test_x_engine = np.asanyarray(test[["ENGINESIZE"]])
+test_x_fuel = np.asanyarray(test[["FUELCONSUMPTION_COMB"]])
+test_x_cylinders = np.asanyarray(test[["CYLINDERS"]])
 # train_x = np.array(train[["ENGINESIZE"]]) ALTERNATIVE FOR ASANYARRAY
 train_y = np.asanyarray(train[["CO2EMISSIONS"]])
+test_y =  np.asanyarray(test[["CO2EMISSIONS"]])
 # print("train_y:",train_y)
 #%% DEFINING GENERAL FUNCTION FOR LINEAR REGRESSION
-def my_regression_function(datax, datay, label_axis_x, label_axis_y, is_testing):
+def my_regression_function(datax, datay, label_axis_x, label_axis_y, is_testing,main_color,secondary_color):
     ### FITTING SECTION
+    plt.figure()
     regr.fit(datax, datay)
     teta0 = regr.intercept_
     teta1 = regr.coef_
-    plt.scatter(datax, datay, color="red")
+    plt.scatter(datax, datay, color=main_color)
     datay_ = regr.predict(datax)
-    plt.plot(datax,datay,"-m",linewidth=3,color="yellow")
+    plt.plot(datax,datay_,linewidth=3,color=secondary_color)
     plt.xlabel(label_axis_x)
     plt.ylabel(label_axis_y)
-    plt.title("LINEAR REGRESSION - TRAINING DATA")
+    if is_testing:
+        plt.title("LINEAR REGRESSION - TESTING DATA")
+    else:
+        plt.title("LINEAR REGRESSION - TRAINING DATA")
+    
     
     ## MSE - EVALUATION ERROR SECTION 
     MSE = []
-    x = df.label_axis_x
-    y = df.label_axis_y
-    theta_vect = np.linspace(-250,250,1000) #set theta space
+    x = df[label_axis_x]
+    y = df[label_axis_y]
+    theta_vect = np.linspace(-100,250,500) #set theta space
     for theta in theta_vect:
         aux = 1/len(x) * np.sum((y-theta*x)**2) #MSE
         MSE.append(aux)
-    
+    plt.figure()
     plt.plot(theta_vect,MSE,"r",linewidth=2)
     plt.xlabel("theta")
     plt.ylabel("MSE")
@@ -135,77 +145,89 @@ def my_regression_function(datax, datay, label_axis_x, label_axis_y, is_testing)
     
     #EVALUATION RESULT
     # ERRORS USING NUMPY FUNCTIONS
-    if is_testing:
-        print("TESTING EVALUATION")
-        print("Mean absolute error: %.2f", np.mean(np.absolute(datay_ - datay)))
-        print("Residual sum of squares (MSE): %.2f" % np.mean((datay_ - datay) ** 2))
-        print("R2-score: %.2f" % r2_score(datay_ , datay) )
+    print("TESTING EVALUATION")
+    print("Mean absolute error: %.2f", np.mean(np.absolute(datay_ - datay)))
+    print("Residual sum of squares (MSE): %.2f" % np.mean((datay_ - datay) ** 2))
+    print("R2-score: %.2f" % r2_score(datay_ , datay))
+    print("root mean squared error (RMSE): %.2f" % np.sqrt(np.mean((datay_ - datay) ** 2)))
+    print("USING SKLEARN")
+    print()
+    print("Residual sum of squares (scikit MSE): %.2f" % mean_squared_error(datay_ , datay))
+    rmse = mean_squared_error(datay_ , datay, squared = False)
+    print("Root mean squared Errors (RMSE): %.2f" % rmse)
+
 
 
 #%%
-regr.fit(train_x, train_y)##OBTAINING COEFICIENTS OF MY LINEAR REGRESSION
+# regr.fit(train_x, train_y)##OBTAINING COEFICIENTS OF MY LINEAR REGRESSION
 
 # %%COEFICCIENTS
-print("TETA 1", regr.coef_) #teta1
-print("TETA 0", regr.intercept_) #teta0
+# print("TETA 1", regr.coef_) #teta1
+# print("TETA 0", regr.intercept_) #teta0
 
-plt.scatter(train.ENGINESIZE, train.CO2EMISSIONS, color="red")
+# plt.scatter(train.ENGINESIZE, train.CO2EMISSIONS, color="red")
 
 # plt.plot(train_x, regr.coef_[0][0]*train_x + regr.intercept_[0],"-r", linewidth=2, color="black")
 
 #or another way of plotting our linear equation is using predict with independent variable x as argument
 
-train_y = regr.predict(train_x)
-plt.plot(train_x,train_y,"-m",linewidth=3,color="yellow")
+# train_y = regr.predict(train_x)
+# plt.plot(train_x,train_y,"-m",linewidth=3,color="yellow")
 
-plt.xlabel("ENGINE SIZE")
-plt.ylabel("EMISSION")
-plt.title("LINEAR REGRESSION - TRAIN")
+# plt.xlabel("ENGINE SIZE")
+# plt.ylabel("EMISSION")
+# plt.title("LINEAR REGRESSION - TRAIN")
 
 #%% Manually calculating the predicted value of CO2 emission versus Engine Size
 
-exResult = regr.intercept_ + (regr.coef_*(2.9))
-print("EXERCISE RESULT:",exResult)
+# exResult = regr.intercept_ + (regr.coef_*(2.9))
+# print("EXERCISE RESULT:",exResult)
 
 #%%MSE - CONVEX FUNCTION    
-MSE = []
-x = df.ENGINESIZE
-y = df.CO2EMISSIONS
+# MSE = []
+# x = df.ENGINESIZE
+# y = df.CO2EMISSIONS
 
-theta_vect = np.linspace(-100,250,1000) #set theta space
+# theta_vect = np.linspace(-100,250,1000) #set theta space
 
-for theta in theta_vect:
-    aux = 1/len(x) * np.sum((y-theta*x)**2) #MSE
-    MSE.append(aux)
+# for theta in theta_vect:
+#     aux = 1/len(x) * np.sum((y-theta*x)**2) #MSE
+#     MSE.append(aux)
     
-plt.plot(theta_vect,MSE,"r",linewidth=2)
-plt.xlabel("theta")
-plt.ylabel("MSE")
-plt.title("MSE - CONVEX FUNCTION")
+# plt.plot(theta_vect,MSE,"r",linewidth=2)
+# plt.xlabel("theta")
+# plt.ylabel("MSE")
+# plt.title("MSE - CONVEX FUNCTION")
 
 #%%EVALUATING OF THE FITTING
 
-test_x = np.asanyarray(test[["ENGINESIZE"]])
-test_y = np.asanyarray(test[["CO2EMISSIONS"]])
+# test_x = np.asanyarray(test[["ENGINESIZE"]])
+# test_y = np.asanyarray(test[["CO2EMISSIONS"]])
 
 #%%TEST PREDICTIONS
 
-test_y_ = regr.predict(test_x)
+# test_y_ = regr.predict(test_x)
+# plt.figure()
+# plt.scatter(test_x,test_y, color="blue")
+# plt.xlabel("ENGINE SIZE")
+# plt.ylabel("EMISSION")
+# plt.title("LINEAR REGRESSION - TEST")
 
+# plt.plot(test_x, test_y_, "r")
 
-plt.figure()
-plt.scatter(test_x,test_y, color="blue")
-plt.xlabel("ENGINE SIZE")
-plt.ylabel("EMISSION")
-plt.title("LINEAR REGRESSION - TEST")
-
-plt.plot(test_x, test_y_, "r")
-
-#%%TO-DO ANALYSE THE ERRORS!!!!!
-## IS THIS MODEL GOOD OR NOT???
-##  
 #%% CALLING MY RECURSIVE FUNCTION
-my_regression_function("FUELCONSUMPTION", "CO2EMISSIONS","FRED","FILIPE")
+# my_regression_function("FUELCONSUMPTION", "CO2EMISSIONS","FRED","FILIPE")
 # my_regression_function(ENGINE_SIZE, CO2EMISSIONS)
 # my_regression_function(CYLINDERS, CO2EMISSIONS)
 
+#%% TRAINING and TESTING SECTION - ENGINE SIZE VS CO2
+my_regression_function(train_x_engine,train_y,"ENGINESIZE","CO2EMISSIONS",False,"blue","red")
+my_regression_function(test_x_engine, test_y,"ENGINESIZE","CO2EMISSIONS",True,"blue","red")
+
+#TRAINING and TESTING SECTION - FUELCONSUMPTION_COMB VS CO2
+my_regression_function(train_x_fuel,train_y,"FUELCONSUMPTION_COMB","CO2EMISSIONS",False,"green","yellow")
+my_regression_function(test_x_fuel,test_y,"FUELCONSUMPTION_COMB","CO2EMISSIONS",True,"green","yellow")
+
+#TRAINING and TESTING SECTION - CYLINDERS VS CO2
+my_regression_function(train_x_cylinders,train_y,"CYLINDERS","CO2EMISSIONS",False,"black","red")
+my_regression_function(test_x_cylinders,test_y,"CYLINDERS","CO2EMISSIONS",True,"black","red")
