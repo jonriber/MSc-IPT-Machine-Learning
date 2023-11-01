@@ -8,7 +8,6 @@ from sklearn.metrics import r2_score
 #%%GET THE DATASET and download it from the link
 # get_ipython().system('wget --no-check-certificate -O FuelConsumption.csv https://cf-coursesdata.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-ML0101ENSkillsNetwork/labs/Module%202/data/FuelConsumptionCo2.csv')
 
-
 #%%use pandas to extract the information
 df = pd.read_csv("C:\DEV\MESTRADO\MACHINE_LEARNING\FICHAS\FP03\FuelConsumptionCo2.csv")
 #%%data size and dimension
@@ -145,7 +144,7 @@ def my_regression_function(datax, datay, label_axis_x, label_axis_y, is_testing,
     
     #EVALUATION RESULT
     # ERRORS USING NUMPY FUNCTIONS
-    print("TESTING EVALUATION")
+    print("TESTING EVALUATION",label_axis_x, is_testing)
     print("Mean absolute error: %.2f", np.mean(np.absolute(datay_ - datay)))
     print("Residual sum of squares (MSE): %.2f" % np.mean((datay_ - datay) ** 2))
     print("R2-score: %.2f" % r2_score(datay_ , datay))
@@ -155,6 +154,7 @@ def my_regression_function(datax, datay, label_axis_x, label_axis_y, is_testing,
     print("Residual sum of squares (scikit MSE): %.2f" % mean_squared_error(datay_ , datay))
     rmse = mean_squared_error(datay_ , datay, squared = False)
     print("Root mean squared Errors (RMSE): %.2f" % rmse)
+    print()
 
 
 
