@@ -1,7 +1,7 @@
+#%%Importing LIBS
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-
 
 #%%GET THE DATASET and download it from the link
 # get_ipython().system('wget --no-check-certificate -O FuelConsumption.csv https://cf-coursesdata.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-ML0101ENSkillsNetwork/labs/Module%202/data/FuelConsumptionCo2.csv')
@@ -80,30 +80,74 @@ print("train:",train,len(train))
 print("test:",test,len(test))
 print("percentage", len(train)/(len(train)+len(test)))
 
-#%%visualize training data
-
+#%%visualize training data for ENGINE SIZE VS CO2 EMISSIONS
 plt.scatter(train.ENGINESIZE, train.CO2EMISSIONS, color= "blue")
 plt.xlabel("Engine size")
 plt.ylabel("CO2 Emissions")
 plt.show()
-
+#%%visualize training data for CYLINDERS VS CO2 EMISSIONS
+plt.scatter(train.CYLINDERS, train.CO2EMISSIONS, color= "blue")
+plt.xlabel("CYLINDERS")
+plt.ylabel("CO2 Emissions")
+plt.show()
+#%%visualize training data for FUELCONSUMPTION_COMB VS CO2 EMISSIONS
+plt.scatter(train.FUELCONSUMPTION_COMB, train.CO2EMISSIONS, color= "blue")
+plt.xlabel("FUELCONSUMPTION_COMB")
+plt.ylabel("CO2 Emissions")
+plt.show()
 #%%using sklearn package to model data
 from sklearn import linear_model
+from sklearn.metrics import r2_score 
 regr = linear_model.LinearRegression()
-print("regr:",regr)
-#%%
-train_x = np.asanyarray(train[["ENGINESIZE"]])
-print("train_x:",train_x)
+#%% GETTING TRAINING DATA FOR INDEPENDENT VARIABLES
+train_x_engine = np.asanyarray(train[["ENGINESIZE"]])
+train_x_fuel = np.asanyarray(train[["FUELCONSUMPTION_COMB"]])
+train_x_cylinder = np.asanyarray(train[["CYLINDERS"]])
 # train_x = np.array(train[["ENGINESIZE"]]) ALTERNATIVE FOR ASANYARRAY
 train_y = np.asanyarray(train[["CO2EMISSIONS"]])
-print("train_y:",train_y)
+# print("train_y:",train_y)
+#%% DEFINING GENERAL FUNCTION FOR LINEAR REGRESSION
+def my_regression_function(datax, datay, label_axis_x, label_axis_y, is_testing):
+    ### FITTING SECTION
+    regr.fit(datax, datay)
+    teta0 = regr.intercept_
+    teta1 = regr.coef_
+    plt.scatter(datax, datay, color="red")
+    datay_ = regr.predict(datax)
+    plt.plot(datax,datay,"-m",linewidth=3,color="yellow")
+    plt.xlabel(label_axis_x)
+    plt.ylabel(label_axis_y)
+    plt.title("LINEAR REGRESSION - TRAINING DATA")
+    
+    ## MSE - EVALUATION ERROR SECTION 
+    MSE = []
+    x = df.label_axis_x
+    y = df.label_axis_y
+    theta_vect = np.linspace(-250,250,1000) #set theta space
+    for theta in theta_vect:
+        aux = 1/len(x) * np.sum((y-theta*x)**2) #MSE
+        MSE.append(aux)
+    
+    plt.plot(theta_vect,MSE,"r",linewidth=2)
+    plt.xlabel("theta")
+    plt.ylabel("MSE")
+    plt.title("MSE - CONVEX FUNCTION")
+    
+    #EVALUATION RESULT
+    # ERRORS USING NUMPY FUNCTIONS
+    if is_testing:
+        print("TESTING EVALUATION")
+        print("Mean absolute error: %.2f", np.mean(np.absolute(datay_ - datay)))
+        print("Residual sum of squares (MSE): %.2f" % np.mean((datay_ - datay) ** 2))
+        print("R2-score: %.2f" % r2_score(datay_ , datay) )
+
+
 #%%
 regr.fit(train_x, train_y)##OBTAINING COEFICIENTS OF MY LINEAR REGRESSION
 
 # %%COEFICCIENTS
 print("TETA 1", regr.coef_) #teta1
 print("TETA 0", regr.intercept_) #teta0
-print("EQUATION:","Y=",regr.intercept_[0],"+",regr.coef_[0][0],"* X")
 
 plt.scatter(train.ENGINESIZE, train.CO2EMISSIONS, color="red")
 
@@ -140,7 +184,6 @@ plt.ylabel("MSE")
 plt.title("MSE - CONVEX FUNCTION")
 
 #%%EVALUATING OF THE FITTING
-from sklearn.metrics import r2_score
 
 test_x = np.asanyarray(test[["ENGINESIZE"]])
 test_y = np.asanyarray(test[["CO2EMISSIONS"]])
@@ -161,15 +204,8 @@ plt.plot(test_x, test_y_, "r")
 #%%TO-DO ANALYSE THE ERRORS!!!!!
 ## IS THIS MODEL GOOD OR NOT???
 ##  
-#%%DEFINING MY GENERAL FUNCTION
-def my_regression_function(datax, datay, label_axis_x, label_axis_y):
-    print("datax:",datax)
-    print("datay:",datay)
-    print("label_axis_x:",label_axis_x)
-    print("label_axis_y:",label_axis_y)
-    print("function ending")
-    
+#%% CALLING MY RECURSIVE FUNCTION
 my_regression_function("FUELCONSUMPTION", "CO2EMISSIONS","FRED","FILIPE")
 # my_regression_function(ENGINE_SIZE, CO2EMISSIONS)
 # my_regression_function(CYLINDERS, CO2EMISSIONS)
-# %%
+
