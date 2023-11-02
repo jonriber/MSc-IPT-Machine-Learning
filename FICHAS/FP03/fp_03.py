@@ -47,7 +47,6 @@ df.head(0)
 
 #%%visualize data using histogram using PANDAS
 viz = cdf[["CYLINDERS","ENGINESIZE","CO2EMISSIONS","FUELCONSUMPTION_COMB"]]
-# viz = cdf[["CYLINDERS","ENGINESIZE","FUELCONSUMPTION_COMB"]]
 viz.hist()
 viz.plot()
 
