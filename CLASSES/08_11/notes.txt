@@ -1,0 +1,36 @@
+Simple Linear Regression
+
+    # Another way for model evaluation: bootstrapping technique
+
+        * generate synthetic random data from the original data (with replacement)
+        * Ressampling with replacement
+        * Repeat the proccess many times
+        * estimante theta regression parameter for each dataset
+        * from the distribution of all datasets and thetas, obtain a confidence interval (CI), inside 95%
+        * this is an option if we dont wanna use test cases
+
+Multiple Linear Regression
+
+    * pros for using multiple linear regression are:
+        - independent variables effectiveness on prediction
+        - 
+    
+
+    HOW TO ESTIMATE THETA????
+        - Ordinary Least Squares
+            . linear algebra operations
+                . takes long time for larger datasets (10k+ rows)
+        - Optimazation algorithms
+            . Gradient descent
+                . proper approach if you have larger datasets
+                . 
+    Q&A for multiple linear regression
+
+    - how to determine wheter to use simple or multiple linear regression?
+    - how many independent variables to use?
+    - OVERFITTING should be avoided
+    - Binary variable to numerical variable
+
+
+    Hyperplan is a plan with more than 2 dimensions
+
