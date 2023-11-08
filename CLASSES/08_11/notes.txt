@@ -34,3 +34,11 @@ Multiple Linear Regression
 
     Hyperplan is a plan with more than 2 dimensions
 
+    Scaling and normalization
+        . min -max - features are scaled between 0 and 1 (scaling)
+        . z score - features are normalized to zero mean and standard deviation 1 (normalization)
+        NOTE: Should not be applied to temporal series
+
+    
+
+
