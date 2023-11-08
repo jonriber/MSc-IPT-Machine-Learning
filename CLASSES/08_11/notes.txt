@@ -39,6 +39,26 @@ Multiple Linear Regression
         . z score - features are normalized to zero mean and standard deviation 1 (normalization)
         NOTE: Should not be applied to temporal series
 
-    
+    # GRADIENT descent
+
+        - generic algorithm capable of finding solutions to a wide range of problems
+        - main ideia is to tune parameters iteratively in order to minimize a cost function
+        - GO in the direction of the sttepest slope, by measuring a local gradient, until it reaches a zero
+        gradient
+
+        HOW IT WORKS:
+        - init with a random theta
+        - apply derivate equation, the result might be 0, negative or positive
+        - following the last result, iteratively applying for different theta values
+        - controlling a tiny parameter called learning rate, this is the tuning step of the
+        gradient descent
+
+        * if our regression is of the simple type, the theta function is quadratic, which measuring
+        it is convex
+        * for other types of regression with not so regular bowls, we might have global minimun and local ~
+        minimum
+        * it also includes the learning rate
+
+
 
 

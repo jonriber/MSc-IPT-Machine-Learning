@@ -48,8 +48,8 @@ print("train: ",train)
 print("test: ",test)
 
 
-train_x
-train_y
+train_x = np.asanyarray(train[["ENGINESIZE"]])
+train_y = np.asanyarray(train[["CO2EMISSIONS"]])
 #separating y axis from x axis, that means splitting between dependent variable vs independent
 
 # %% Evaluation of error section, using testing dataset, about 20%
