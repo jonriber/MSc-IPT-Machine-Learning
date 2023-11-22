@@ -106,3 +106,38 @@ scores_r2 = cross_val_score(regr, train_x, train_y, scoring="r2",cv=5)
 predicted = cross_val_predict(regr, train_x, train_y, cv=5)
 
 scores_r2 = r2_score(train_y, predicted)
+#%%Exercise 5
+
+#calculating normalization
+
+def norm_func(value,min, max):
+    return ((value- min)/(max-min))
+
+#trying some values for max/min
+
+v1 = norm_func(4,2,10)
+print("V1 is:",v1)
+
+v2 = norm_func(10,2,10)
+v3 = norm_func(2,2,10)
+v4 = norm_func(8,2,10)
+#%% Exercise 6
+
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+
+data = np.array([
+    [4,30],
+    [10,10],
+    [2,20],
+    [8,15]
+])
+
+scaler = MinMaxScaler()
+scaler.fit(data)
+scaler.data_max_
+scaler.data_min_
+
+data_scaled = scaler.transform(data)
+
+print(data_scaled)
+

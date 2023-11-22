@@ -1,0 +1,14 @@
+# multiple linear regression
+
+    Gradient Descent:
+    
+    Stochastic Gradient Descent
+        - for larger datasets
+    
+    Mini-batch gradient Descent
+
+# Non linear regression - polynomial
+
+    
+# Variables
+    - Cathegorical 
