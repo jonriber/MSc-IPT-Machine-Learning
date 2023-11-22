@@ -141,3 +141,11 @@ data_scaled = scaler.transform(data)
 
 print(data_scaled)
 
+
+# %% Exercise 7
+
+#testing with co2 emissions 
+np.random.seed(42)
+train, test = train_test_split(cdf, test_size=0.2)
+
+
