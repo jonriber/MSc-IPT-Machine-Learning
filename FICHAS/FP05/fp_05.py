@@ -55,4 +55,6 @@ plt.scatter(X,y, color="b")
 from sklearn.metrics import r2_score
 
 print("r2_score", r2_score(y,y_est))
-# %% defining function 
+# %% Exercise 3 defining function 
+
+
