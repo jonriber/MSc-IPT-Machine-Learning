@@ -1,0 +1,36 @@
+# CLASSIFICATION
+
+    - END TO END
+    
+
+    f1 SCORE RELATES PRECISION AND ACCURACY
+
+    sklearn metrics:~
+        - sklearn.metrics import accuracy_score
+
+        get_scorer_names() # full list of metrics avaiable
+
+        Today example:
+
+            DATASET: MNIST
+            60k training images
+            10k testing images
+
+            each image is grayscale 28x28 = 284 pixels (features)
+
+        classificators:
+            - logistic REGRESSION
+            - Stochastic Gradient Descent (SGD) classifier
+        
+        from sklearn.Linear_model import SGDCLASSIFIER
+
+        LOSS function is used when we have a variable that is BINARY
+        The loss function for CLASSIFICATION is a little bit different from regression, where regression
+        was the target for minimum theta or MSE~
+
+        loss = "hinge", convex function (by default)
+        loss = log-loss, equivalent to logistic regression
+
+        optimazation with SGD = algorithm to optimize
+        Generic version of SGD classifier
+            Binary CLASSIFICATION
