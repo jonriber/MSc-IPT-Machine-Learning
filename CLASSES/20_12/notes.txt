@@ -34,3 +34,15 @@
         optimazation with SGD = algorithm to optimize
         Generic version of SGD classifier
             Binary CLASSIFICATION
+
+SVM classifier
+
+    classify cases by finding a separator
+        - map data to high-dimensional feature space, when data is non
+        linearly
+        - find a separator as a hyperplane
+
+    a way to split and classify data through transformation
+    a group of transformations called Kernelling
+
+    Use this when separation is complex
