@@ -103,7 +103,7 @@ grid_search.fit(X, y)
 grid_search.best_params_
 grid_search.cv_results_
 grid_search.best_score_
-grid_search.best_estimator
+grid_search.best_estimator_
 
 # y_est = grid_search.best_estimator_.predict(X)
 # balanced_accuracy_score(y, y_est)
@@ -166,9 +166,11 @@ poly_kernel_svm_clf = Pipeline([
  ("svm_clf", SVC(kernel="poly", degree=3, coef0=1, C=5))
  ])
 
+#%%
 poly_kernel_svm_clf.fit(X, y)
 
 
+#%%
 y_predict = poly_kernel_svm_clf.predict(X)
 accuracy_score(y, y_predict)
 balanced_accuracy_score(y, y_predict)
