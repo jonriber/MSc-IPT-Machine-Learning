@@ -60,3 +60,29 @@ Typical kernels:~
     - Gaussian RBF
     - Sigmoid
 
+KNN classifier
+Possible use of my projects second proposal
+
+    Euclidian distance
+    before using that, we must normalize data
+    lazy algorithm as there is no training (just store training data)
+
+    DISTANCES:
+        - Euclidian
+        - MANHATTAN
+        - MINKOWSKI
+        - HAMMING
+
+    PROS AND cons
+        ADVANTAGES: 
+            - VERY INTUITIVE AND SIMPLE
+            - NO NEED TO BUILD A MODEL OR TUNE PARAMENTERS
+            - NON-LINEAR DATA BECAUSE THERE ARE NO ASSUMPTIONS
+            - DESPITE SIMPLICITY, THERE ARE MANY REAL-WORLD CASES THAT PERFORM WELL
+
+        CONS:
+            - COMPUTATION COST IS HIGH
+            - HIGH MEMORY STORAGE
+            - SEMSIBLE TO OUTLIARS
+
+

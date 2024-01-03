@@ -7,7 +7,7 @@ import numpy as np
 from sklearn.datasets import fetch_openml
 
 #%%MNIST DATASET - EXERCISE 1
-mnist = fetch_openml('mnist_784', version=1, as_frame = False) #as_frame = False otherwise
+# mnist = fetch_openml('mnist_784', version=1, as_frame = False) #as_frame = False otherwise
 #returns data as a dataframe
 mnist.keys()
 mnist.url ##https://www.openml.org/d/554
