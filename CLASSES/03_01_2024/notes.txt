@@ -1,0 +1,29 @@
+SVM CLASSIFICATION
+
+SUPORT VECTOR MACHINE (SVM)
+    # MAPPING DATA TO A HIGH-DIMENSIONAL FEATURE space
+    # FINDING A separator
+
+    EXAMPLE: CHANGING THE PERSPECTIVE OF THE MAIN ANALISYS
+
+DATA transformation:
+    # WHEN YOUR DATA IS NOT SEPARABLE, AND IS LINEAR
+    # AFTER MULTIPLYING IT TO X^2 (KERNELLING FUNCTION), YOU NOW HAVE YOUR DATA DISPLAYED IN A QUADRATIC FUNCTION
+
+SVM WANT TO FIND THE BETTER hyperplane
+    = THINK ABOUT IT AS A LINE THAT SEPARATES TWO GROUPS
+
+pros and cons:
+
+    advantages:
+        - accurate high dimensional spaces
+        memoey efficient
+
+    cons:
+        1 thousand rows, SVM is not efficient
+
+    Good for image CLASSIFICATION
+    text category assignment
+    detecting spam
+    sentiment ANALISYS
+    gene expression classification
