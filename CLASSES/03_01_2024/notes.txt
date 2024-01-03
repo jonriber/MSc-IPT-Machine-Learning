@@ -21,9 +21,42 @@ pros and cons:
 
     cons:
         1 thousand rows, SVM is not efficient
+        overfitting if the number of features is greater than the number samples
+        not provide a probability estimate
+        sensitive to scaling
 
     Good for image CLASSIFICATION
     text category assignment
     detecting spam
     sentiment ANALISYS
     gene expression classification
+
+OBJECTIVE:
+    # Obtain the widest possible margin
+
+    # Hard margin classification
+        - when impose that all instances are off the street on the right Side
+        - 
+    # Soft Margin
+        - slack variable
+
+SVM with hinge loss is the most common way to apply this classifier
+
+Linear SVM:
+    LinearSVC(C01, loss="hinge") - no transformation
+    SVC(kernel = "linear")
+    SGDCLASSIFIER
+
+PAY ATTENTION TO KERNEL TRICK
+
+C is the opposite of alpha in the linear regression
+The higher the value of C, the the more important is the model function
+
+Kernels:
+    - Allows to compute a transformation without really applying it
+Typical kernels:~
+    - Linear
+    - Polynomial
+    - Gaussian RBF
+    - Sigmoid
+
