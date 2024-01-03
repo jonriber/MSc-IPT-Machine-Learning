@@ -103,4 +103,9 @@ CLASSIFICATION: END-TO-END
 
 
     More than 2 layers = deep neural NETWORKS
-    
+
+
+    KERAS API = tensorflow to allow devs to use 
+
+    TensorFlow = google
+    pyTorch = Facebook
