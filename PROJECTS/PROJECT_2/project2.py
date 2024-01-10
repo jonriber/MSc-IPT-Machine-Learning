@@ -37,9 +37,30 @@ sns.distplot(df_drug['Na_to_K'])
 # %% DRUG TYPE DISTRIBUTION
 
 sns.set_theme(style="darkgrid")
-sns.countplot(y="Drug", data=df_drug, palette="flare")
+sns.countplot(y="Drug", data=df_drug)
 plt.ylabel('Drug Type')
 plt.xlabel('Total')
+plt.show()
+
+# %% GENDER DISTRIBUTION
+sns.set_theme(style="darkgrid")
+sns.countplot(x="Sex", data=df_drug, palette="rocket")
+plt.xlabel('Gender (F=Female, M=Male)')
+plt.ylabel('Total')
+plt.show()
+
+# %% BLOOD PRESSURE DISTRIBUTION
+sns.set_theme(style="darkgrid")
+sns.countplot(y="BP", data=df_drug, palette="crest")
+plt.ylabel('Blood Pressure')
+plt.xlabel('Total')
+plt.show()
+
+# %% Cholesterol DISTRIBUTION
+sns.set_theme(style="darkgrid")
+sns.countplot(x="Cholesterol", data=df_drug, palette="magma")
+plt.xlabel('Blood Pressure')
+plt.ylabel('Total')
 plt.show()
 
 # %%
