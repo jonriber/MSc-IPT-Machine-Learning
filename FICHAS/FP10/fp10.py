@@ -30,8 +30,7 @@ y_pred = sgd_clf.predict(X)
 print('Accuracy', accuracy_score(y, y_pred))
 
 #%%
-sgd_clf_log = SGDClassifier(max_iter=1000, tol=1e-3, random_state=42,
- loss="log_loss", eta0=1, learning_rate="constant", penalty=None)
+sgd_clf_log = SGDClassifier(max_iter=1000, tol=1e-3, random_state=42,loss="log_loss", eta0=1, learning_rate="constant", penalty=None)
 sgd_clf_log.fit(X,y)
 y_pred = sgd_clf_log.predict(X)
 print('Accuracy', accuracy_score(y, y_pred))
@@ -75,8 +74,10 @@ X_train_full.dtype #each pixel represented by 8 bits (0-255)
 X_valid, X_train = X_train_full[:5000] / 255., X_train_full[5000:] / 255.
 y_valid, y_train = y_train_full[:5000], y_train_full[5000:]
 X_test = X_test / 255.
+#%% DIMENSIONS
 X_train.shape
 X_valid.shape
+X_test.shape
 
 #%% VISUALIZE DATA
 #plot one instance
@@ -124,7 +125,7 @@ model.add(keras.layers.Dense(10, activation="softmax"))
 keras.backend.clear_session()
 np.random.seed(42)
 tf.random.set_seed(42)
-#compact way of implementing the previous model is
+# #compact way of implementing the previous model is
 model = keras.models.Sequential([
     keras.layers.Flatten(input_shape=[28, 28]),
     keras.layers.Dense(300, activation="relu"),
@@ -133,7 +134,11 @@ model = keras.models.Sequential([
 ])
 #%% 
 model.summary()
+
+#%%
+# from keras.utils.visualize_util import plot
 keras.utils.plot_model(model, "my_MLP fashion_mnist_model.png", show_shapes=True)
+#%%
 model.layers #layers and memory address where the object is stored
 model.layers[1].name
 model.layers[2].name
