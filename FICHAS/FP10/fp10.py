@@ -191,6 +191,7 @@ y_proba = model.predict(X_new) #probabilities of each class
 y_proba.round(2) #round to 2 decimal cases
 y_proba
 y_pred = np.argmax(y_proba, axis=1)
+#%%
 y_pred
 
 
