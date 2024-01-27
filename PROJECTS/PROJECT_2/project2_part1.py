@@ -222,7 +222,7 @@ print('Logistic Regression accuracy is: {:.2f}%'.format(LRAcc * 100))
 # Get the best hyperparameters found by grid search
 print("Best hyperparameters:", grid_search.best_params_)
 
-#%% PIPELINE WITH 3 DIFFERENT MODELS
+#%% PIPELINE WITH 5 DIFFERENT MODELS
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
@@ -286,24 +286,20 @@ for model_name, mp in models.items():
     results[model_name] = {'model': grid_search, 'accuracy': accuracy}
 
 # Print the results for each model
+model_comparison = []
 for model_name, result in results.items():
     print(f"Model: {model_name}")
     print(classification_report(y_test, result['model'].predict(X_test)))
     print(confusion_matrix(y_test, result['model'].predict(X_test)))
-    print(f"{model_name} accuracy is: {result['accuracy']:.2f}%")
+    print(f"{model_name} accuracy is: {result['accuracy']*100:.2f}%")
     print(f"Best hyperparameters for {model_name}: {result['model'].best_params_}")
     print("\n")
+    model_comparison.append({'Model': model_name, 'Accuracy': result['accuracy']*100})
+
 # %%
 import pandas as pd
 
 # Initialize an empty list to store the model names and accuracies
-model_comparison = []
-
-# Loop through the results and append the model name and accuracy to the list
-for model_name, result in results.items():
-    model_comparison.append({'Model': model_name, 'Accuracy': result['accuracy']})
-
-# Create a pandas DataFrame from the list
 df_model_comparison = pd.DataFrame(model_comparison)
 
 # Print the model comparison dataframe
