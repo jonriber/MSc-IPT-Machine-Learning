@@ -151,3 +151,5 @@ print(confusion_matrix(y_test, y_pred))
 from sklearn.metrics import accuracy_score
 LRAcc = accuracy_score(y_pred,y_test)
 print('Logistic Regression accuracy is: {:.2f}%'.format(LRAcc*100))
+
+#%% 
