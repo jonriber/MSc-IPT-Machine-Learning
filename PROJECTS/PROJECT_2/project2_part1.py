@@ -122,7 +122,7 @@ df_drug = df_drug.drop(['Na_to_K'], axis = 1)
 X = df_drug.drop(["Drug"], axis=1)
 y = df_drug["Drug"]
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 0)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 
 #%% Feature Engineering
 
