@@ -1,14 +1,23 @@
 
-#%% Importing libs
-
+#%% Importing packages
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, confusion_matrix, accuracy_score, classification_report
 from sklearn.metrics import classification_report
 from imblearn.over_sampling import SMOTE
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import GridSearchCV
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+## IMPORTING MODELS
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
 
 
 #%% Reading dataset
@@ -113,7 +122,6 @@ df_drug = df_drug.drop(['Na_to_K'], axis = 1)
 X = df_drug.drop(["Drug"], axis=1)
 y = df_drug["Drug"]
 
-from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 0)
 
 #%% Feature Engineering
@@ -136,10 +144,8 @@ plt.xlabel('Total')
 plt.show()
 
 #%% MODELS
-
 ## LOGISTIC REGRESSION
 
-from sklearn.linear_model import LogisticRegression
 LRclassifier = LogisticRegression(solver='liblinear', max_iter=5000)
 LRclassifier.fit(X_train, y_train)
 
@@ -148,13 +154,11 @@ y_pred = LRclassifier.predict(X_test)
 print(classification_report(y_test, y_pred))
 print(confusion_matrix(y_test, y_pred))
 
-from sklearn.metrics import accuracy_score
 LRAcc = accuracy_score(y_pred,y_test)
 print('Logistic Regression accuracy is: {:.2f}%'.format(LRAcc*100))
 
 #%% 
 # K Neighbours
-from sklearn.neighbors import KNeighborsClassifier
 KNclassifier = KNeighborsClassifier(n_neighbors=20)
 KNclassifier.fit(X_train, y_train)
 
@@ -163,13 +167,11 @@ y_pred = KNclassifier.predict(X_test)
 print(classification_report(y_test, y_pred))
 print(confusion_matrix(y_test, y_pred))
 
-from sklearn.metrics import accuracy_score
 KNAcc = accuracy_score(y_pred,y_test)
 print('K Neighbours accuracy is: {:.2f}%'.format(KNAcc*100))
 
 #%% 
 # SVM
-from sklearn.svm import SVC
 SVCclassifier = SVC(kernel='linear', max_iter=251)
 SVCclassifier.fit(X_train, y_train)
 
@@ -178,94 +180,56 @@ y_pred = SVCclassifier.predict(X_test)
 print(classification_report(y_test, y_pred))
 print(confusion_matrix(y_test, y_pred))
 
-from sklearn.metrics import accuracy_score
 SVCAcc = accuracy_score(y_pred,y_test)
 print('SVC accuracy is: {:.2f}%'.format(SVCAcc*100))
 
 
-#%% PIPELINE TIME!
-
-from sklearn.pipeline import Pipeline
-from sklearn.model_selection import GridSearchCV
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
-
-# Assuming X_train, X_test, y_train, y_test are already defined
-
-# Create a pipeline with a preprocessing step (standardization) and the logistic regression classifier
-pipeline = Pipeline([
-    ('scaler', StandardScaler()),  # Standardize the features
-    ('classifier', LogisticRegression(solver='liblinear', max_iter=5000))  # Logistic regression classifier
-])
-
-# Define the hyperparameters to search
-param_grid = {
-    'classifier__C': [0.001, 0.01, 0.1, 1, 10, 100],  # Regularization parameter
-    'classifier__penalty': ['l1', 'l2']  # Regularization penalty
-}
-
-# Perform grid search to find the best hyperparameters
-grid_search = GridSearchCV(pipeline, param_grid, cv=5)  # 5-fold cross-validation
-grid_search.fit(X_train, y_train)
-
-# Make predictions using the best model found by grid search
-y_pred = grid_search.predict(X_test)
-
-# Evaluate the model
-print(classification_report(y_test, y_pred))
-print(confusion_matrix(y_test, y_pred))
-LRAcc = accuracy_score(y_pred, y_test)
-print('Logistic Regression accuracy is: {:.2f}%'.format(LRAcc * 100))
-
-# Get the best hyperparameters found by grid search
-print("Best hyperparameters:", grid_search.best_params_)
-
 #%% PIPELINE WITH 5 DIFFERENT MODELS
-from sklearn.model_selection import GridSearchCV
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.svm import SVC
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
-
 # Define the models and their corresponding parameters
 models = {
     'logistic_regression': {
         'model': LogisticRegression(solver='liblinear', max_iter=5000),
         'params': {
             'classifier__C': [0.001, 0.01, 0.1, 1, 10, 100],
-            'classifier__penalty': ['l1', 'l2']
+            'classifier__penalty': ['l1', 'l2'],
+            'classifier__fit_intercept': [True, False],  
+            'classifier__class_weight': [None, 'balanced'],
         }
     },
     'k_neighbors': {
         'model': KNeighborsClassifier(),
         'params': {
-            'classifier__n_neighbors': [3, 5, 7, 9]
+            'classifier__n_neighbors': [3, 5, 7, 9],
+            'classifier__weights': ['uniform', 'distance'],  # Additional parameter
+            'classifier__p': [1, 2]  # Additional parameter
         }
     },
     'svm': {
         'model': SVC(),
         'params': {
             'classifier__C': [0.1, 1, 10, 100],
-            'classifier__kernel': ['linear', 'rbf']
+            'classifier__kernel': ['linear', 'rbf'],
+            'classifier__gamma': ['scale', 'auto'],  # Additional parameter
+            'classifier__degree': [2, 3, 4] 
         }
     },
     'decision_tree': {
         'model': DecisionTreeClassifier(),
         'params': {
-            'classifier__max_depth': [3, 5, 7, 9]
+            'classifier__max_depth': [3, 5, 7, 9],
+            'classifier__min_samples_split': [2, 5, 10],  # Additional parameter
+            'classifier__min_samples_leaf': [1, 2, 4],  # Additional parameter
+            'classifier__criterion': ['gini', 'entropy']
         }
     },
     'random_forest': {
         'model': RandomForestClassifier(),
         'params': {
             'classifier__n_estimators': [100, 200, 300],
-            'classifier__max_depth': [3, 5, 7]
+            'classifier__max_depth': [3, 5, 7],
+            'classifier__min_samples_split': [2, 5, 10],  # Additional parameter
+            'classifier__min_samples_leaf': [1, 2, 4],  # Additional parameter
+            'classifier__criterion': ['gini', 'entropy'] 
         }
     }
 }
@@ -297,8 +261,6 @@ for model_name, result in results.items():
     model_comparison.append({'Model': model_name, 'Accuracy': result['accuracy']*100})
 
 # %%
-import pandas as pd
-
 # Initialize an empty list to store the model names and accuracies
 df_model_comparison = pd.DataFrame(model_comparison)
 
