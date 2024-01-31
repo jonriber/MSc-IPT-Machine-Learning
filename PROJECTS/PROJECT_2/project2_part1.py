@@ -22,7 +22,8 @@ from sklearn.tree import DecisionTreeClassifier
 
 #%% Reading dataset
 
-df_drug = pd.read_csv("./drug200.csv")
+# df_drug = pd.read_csv("./drug200.csv")
+df_drug = pd.read_csv("./random_data.csv")
 
 #%% Reading the first 6 lines
 df_drug.head()
@@ -125,7 +126,7 @@ y = df_drug["Drug"]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 
 #%% Feature Engineering
-
+## HOT ENCODING
 X_train = pd.get_dummies(X_train)
 X_test = pd.get_dummies(X_test)
 
